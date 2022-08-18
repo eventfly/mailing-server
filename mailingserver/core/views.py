@@ -2,6 +2,7 @@
 from django.http.response import HttpResponse
 from django.views import View
 from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.http import JsonResponse
 
 import json
@@ -24,12 +25,14 @@ class IndexView(View):
 
         # print(text_content)
 
-        return HttpResponse(text_content)
+        # return HttpResponse(text_content)
 
-        event_emails = data.get('emails')
+        subject = "[EventFly] Invitation for " + context['event_title']
+        from_email = 'rabid@dhaka-ai.com'
+        to = data.get('emails')
 
-        for email in event_emails:
-            # Send mail with text_content to email
-            pass
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send(fail_silently=False)
 
         return JsonResponse({'message': 'success'})
