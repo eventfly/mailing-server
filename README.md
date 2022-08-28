@@ -12,5 +12,6 @@ pip install -r requirements.txt
 - Activate the **virtual environment**
 - Navigate to the project directory and run the server:
 ```sh
+cd mailingserver
 python manage.py runserver
 ```
